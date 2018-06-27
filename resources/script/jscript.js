@@ -3,6 +3,7 @@ function genCaptcha(){
   var randomNum1 = Math.ceil(Math.random()* 20);
   var randomNum2 = Math.ceil(Math.random()* 20);
   var ran3 = Math.ceil(Math.random()* 4);
+  // sourcetree test comment
   if (ran3==1) {
     document.getElementById("captchha").innerHTML =
     randomNum1+"&nbsp;+&nbsp;"+randomNum2+"&nbsp;=";
