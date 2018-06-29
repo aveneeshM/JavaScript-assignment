@@ -2,6 +2,12 @@ var total;
 function genCaptcha(){
   var randomNum1 = Math.ceil(Math.random()* 20);
   var randomNum2 = Math.ceil(Math.random()* 20);
+  if(randomNum1 < 10){
+    randomNum1+=10;
+  }
+  if(randomNum2 < 10){
+    randomNum2+=10;
+  }
   var ran3 = Math.ceil(Math.random()* 4);
   if (ran3==1) {
     document.getElementById("captchha").innerHTML =
