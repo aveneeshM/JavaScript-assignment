@@ -107,7 +107,8 @@ input, textarea {
 input[type=submit]:hover {
     background-color: #45a049;
 }
-
+#hiddenDiv { display: none; }
+#finalsubmit[disabled]:hover + #hiddenDiv { display: block; }
 
 .row:after {
     content: "";
