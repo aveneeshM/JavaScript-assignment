@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <label for="lname"><b>Last Name:<sup>*</sup></b></label><br>
-        <input type="text" id="lname" name="lastname" placeholder="Middle Name" >
+        <input type="text" id="lname" name="lastname" placeholder="Last Name" >
     </div>
     <div class="row">
         <label for="lname"><b>Date of Birth:</b></label><br>
@@ -52,12 +52,8 @@
     </div>
     <div class="row">
         <label for="hobby"><b>Personal Interests:</b></label><br>
-        
-        <label><input type="checkbox" name="intr" value="Sports" > Sports</label>
-        <label><input type="checkbox" name="intr" value="Books"> Books</label>
-        <label><input type="checkbox" name="intr" value="Software"> Software</label>
-        <label><input type="checkbox" name="intr" value="Fashion"> Fashion</label>
-        <label><input type="checkbox" name="intr" value="Travelling">Travelling</label>
+        <textarea rows="2" cols="50" id="interest" name="intrst" placeholder="Select multiple interest separated by space. "></textarea><br>
+
  
     </div>
   </fieldset>
@@ -107,9 +103,9 @@
     
        <div class="row">
         <label for="num"><b>Password:<sup>*</sup></b></label><br>
-        <input type="password" id="pwd" name="pwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required ><br>
+        <input type="password" id="pwd" name="pwd" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"><br>
         <label for="num"><b>Confirm Password:<sup>*</sup></b></label><br>
-        <input type="password" id="pwd1" name="pwd1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>&nbsp;&nbsp;&nbsp;
+        <input type="password" id="pwd1" name="pwd1" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">&nbsp;&nbsp;&nbsp;
        </div> 
      </div>
      <div style="width: 70%; float: left;" id="aftercaptcha">
@@ -119,8 +115,8 @@
        <input type="text" id="soln" name="soln" size="20" required>
        <sup id="suptext"></sup>
        <br><br>
-       <button style="margin-left: 18px;" onclick="Myfunctn()" id="btn1">Submit</button> 
-       <button type="button" name="refresh" onclick="Myfunctn1()" id="btn2">Refresh</button> 
+       <button style="margin-left: 18px;" onclick="captchaSubmit()" id="btn1">Submit</button> 
+       <button type="button" name="refresh" onclick="captchaRefresh()" id="btn2">Refresh</button> 
       </div>
      </div>
     </fieldset>

@@ -3,13 +3,17 @@ function genCaptcha(){
   var randomNum1 = Math.ceil(Math.random()* 20);
   var randomNum2 = Math.ceil(Math.random()* 20);
   var ran3 = Math.ceil(Math.random()* 4);
-  // sourcetree test comment
   if (ran3==1) {
     document.getElementById("captchha").innerHTML =
     randomNum1+"&nbsp;+&nbsp;"+randomNum2+"&nbsp;=";
     total =randomNum1 + randomNum2;
   }
   if (ran3==2) {
+    if(randomNum2 > randomNum1){
+      var temp =randomNum1;
+      randomNum1 =randomNum2;
+      randomNum2 =temp;
+    }
     document.getElementById("captchha").innerHTML =
     randomNum1+"&nbsp;-&nbsp;"+randomNum2+"&nbsp;=";
     total =randomNum1 - randomNum2;
@@ -28,7 +32,7 @@ function genCaptcha(){
     total =Math.round(randomNum1 / randomNum2);
   }
 }
-function Myfunctn(){
+function captchaSubmit(){
   if(total != document.getElementById("soln").value){
     document.getElementById("suptext").innerHTML = "wrong answer!!";
     var btn = document.getElementById("btn1");
@@ -40,7 +44,7 @@ function Myfunctn(){
     document.getElementById("finalsubmit").disabled = false;
   }
 }
-  function Myfunctn1(){
+  function captchaRefresh(){
   document.getElementById("suptext").innerHTML = "";
   var btn = document.getElementById("btn1");
   btn.disabled = false;
@@ -61,15 +65,17 @@ function validateForm() {
   var addr = document.myForm.add.value; 
   var addr1 = document.myForm.add1.value;
   var numb = document.myForm.num.value;
+  var interests = document.myForm.intrst.value;
   var strng = numb.split(",");
-  var ptrn1 = /[^a-z\s]/gi;
+  var ptrn1 = /[^a-z]/gi;
   var ptrn2 = /^\s+|\s+$/;
   var ptrn3 = /^\d{7}$|^\d{10}$/gm;
+  var ptrn4 = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+  var ptrn5 = /[^a-z\s]/gi;
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth()+1;
   var yyyy = today.getFullYear();
-  var isChecked = false;
   var j;
   var i;
   if(dd<10){
@@ -79,26 +85,34 @@ function validateForm() {
     mm="0"+mm;
   }
   today = yyyy+"-"+mm+"-"+dd;
-  if (pswrd != pswrd1) {
-    alert("Passwords do not match!!");
-    document.myForm.pwd.focus() ;
-    return false;
-  }
-  if (x == "" || y == "") {
-    alert("Complete name must be filled out");
-    return false;
-  }
-  if( x.length <= 2 || y.length <=2 ){
-    alert("firstName and lastName must be of atleast 3 letters.");
-    return false;
-  }
-  if(x.match(ptrn1) != null || x.match(ptrn2) != null ){
-    alert("  FirstName should only contain letters separated by space and shouldn't contain trailing or preceding spaces. ");
+  if (x == ""){
+    alert("first name can not be empty");
     document.myForm.firstname.focus() ;
     return false;
   }
+  if( x.length <= 2){
+    alert("firstName must be of atleast 3 letters.");
+    document.myForm.firstname.focus() ;
+    return false;
+  }
+  if(x.match(ptrn1) != null || x.match(ptrn2) != null ){
+    alert("  FirstName should only contain letters and shouldn't contain trailing or preceding spaces. ");
+    document.myForm.firstname.focus() ;
+    return false;
+  }
+  if (y == ""){
+    alert("Second name can not be empty");
+    document.myForm.lastname.focus() ;
+    return false;
+  }
+  if( y.length <= 2){
+    alert("lastName must be of atleast 3 letters.");
+    document.myForm.lastname.focus() ;
+    return false;
+  }
+
   if(y.match(ptrn1) != null || y.match(ptrn2) != null ){
-    alert("  LastName should only contain letters separated by space and shouldn't contain trailing or preceding spaces. ");
+    alert("  LastName should only contain letters and shouldn't contain trailing or preceding spaces. ");
     document.myForm.lastname.focus() ;
     return false;
   }
@@ -107,21 +121,29 @@ function validateForm() {
     document.myForm.dob.focus() ;
     return false;
   }
-  var loop;
-  var chk_arr = document.myForm.intr;
-  for(loop = 0; loop < chk_arr.length; loop++){
-    if(chk_arr[loop].checked) {
-        isChecked =true;
-      }
-  }
-  if(!isChecked){
-    alert( "Please, check at least one Personal Interest!" );
+    if(document.myForm.dob.value == "" ){
+    alert("Date of Birth is required");
+    document.myForm.dob.focus() ;
     return false;
   }
+  if (interests == ""){
+    alert("Interests can not be empty");
+    document.myForm.intrst.focus() ;
+    return false;
+  }
+
+  if(interests.match(ptrn5) != null || interests.match(ptrn2) != null ){
+    alert(" Interests should only contain words and shouldn't contain trailing or preceding spaces. ");
+    document.myForm.intrst.focus() ;
+    return false;
+  }
+
+
+
   for ( i = strng.length - 1; i >= 0; i--) {
     if(!strng[i].match(ptrn3) ||strng[i] == "" ){
       j=i+1;
-      alert("Contact Number at index"+j+" is not in format or empty.  Contact Numbers should be either a 7 digit landline number or a 10 digit mobile number, Please input only numbers!! You can separate multiple numbers with ',' ");
+      alert("Contact Number at index  "+j+" is not in format or empty.  Contact Numbers should be either a 7 digit landline number or a 10 digit mobile number, Please input only numbers!! You can separate multiple numbers with ',' ");
       document.myForm.num.focus();
       return false;
     }
@@ -131,62 +153,85 @@ function validateForm() {
     document.myForm.add.focus() ;
     return false;
   }
-  if(cty.match(ptrn1) != null || cty.match(ptrn2) != null || cty == "" ){
+  if (cty == "") {
+    alert("Present City can not be empty");
+    document.myForm.city.focus() ;
+    return false;
+  }
+
+  if(cty.match(ptrn1) != null || cty.match(ptrn2) != null){
     alert(" Please provide valid entry!! Present City name shouldn't contain trailing or preceding spaces. ");
     document.myForm.city.focus() ;
     return false;
   }
-  if(stt.match(ptrn1) != null || stt.match(ptrn2) != null || stt == "" ){
-    alert(" Please provide valid entry!! Present State name shouldn't contain trailing or preceding spaces. ");
-    document.myForm.state.focus() ;
-    return false;
-  }
-  if(cntry.match(ptrn1) != null || cntry.match(ptrn2) != null || cntry == ""){
-    alert( "Please provide valid entry!! Present Country name shouldn't contain trailing or preceding spaces. ");
-    document.myForm.country.focus() ;
-    return false;
-  }
-  if( document.myForm.zip.value == "" || isNaN( document.myForm.zip.value ) || document.myForm.zip.value.length != 6 ) {
+   if( document.myForm.zip.value == "" || isNaN( document.myForm.zip.value ) || document.myForm.zip.value.length != 6 || document.myForm.zip.value == "000000" ) {
     alert( "Please provide a zip in the format ######." );
     document.myForm.zip.focus() ;
     return false;
   }
   if (addr1 == "") {
-    alert("Provide your present address!!");
+    alert("Provide your permanent address!!");
     document.myForm.add1.focus() ;
     return false;
   }
-  if(cty1.match(ptrn1) != null || cty1.match(ptrn2) != null || cty1 =="" ){
+  if (cty1 == "") {
+    alert("Present City can not be empty");
+    document.myForm.city1.focus() ;
+    return false;
+  }
+
+  if(cty1.match(ptrn1) != null || cty1.match(ptrn2) != null){
     alert(" Please provide valid entry!! Permanent City name shouldn't contain trailing or preceding spaces. ");
     document.myForm.city1.focus() ;
     return false;
   }
-  if(stt1.match(ptrn1) != null || stt1.match(ptrn2) != null  || stt1 ==""){
-    alert(" Please provide valid entry!! Permanent State name shouldn't contain trailing or preceding spaces or numbers. ");
-    document.myForm.state1.focus() ;
-    return false;
-  }   
-  if(cntry1.match(ptrn1) != null || cntry1.match(ptrn2) != null || cntry1 == ""){
-    alert(" Please provide valid entry!! Permanent Country name shouldn't contain trailing or preceding spaces. ");
-    document.myForm.country1.focus() ;
-    return false;
-  } 
-  if( document.myForm.zip1.value == "" || isNaN( document.myForm.zip1.value ) || document.myForm.zip1.value.length != 6 ) {
+  
+  if( document.myForm.zip1.value == "" || isNaN( document.myForm.zip1.value ) || document.myForm.zip1.value.length != 6 || document.myForm.zip1.value == "000000" ) {
     alert( "Please provide a zip in the format ######." );
     document.myForm.zip1.focus() ;
     return false;
   }
   var emailID = document.myForm.email.value;
+  if (emailID == "") {
+    alert("Provide your email!!");
+    document.myForm.email.focus() ;
+    return false;
+  }
   atpos = emailID.indexOf("@");
   dotpos = emailID.lastIndexOf(".");
   if (atpos < 1 || ( dotpos - atpos < 2 ) || emailID == "") {
-    alert("Please enter correct email ID");
+    alert("Please enter valid email ID");
     document.myForm.email.focus() ;
     return false;
   }
   if(emailID.match(ptrn2) != null ){
     alert("Email ID shouldn't contain trailing or preceding spaces. ");
-    document.myForm.firstname.focus() ;
+    document.myForm.email.focus() ;
+    return false;
+  }  
+  if (pswrd == "") {
+    alert("Provide a password.");
+    document.myForm.pwd.focus() ;
+    return false;
+  }
+  if(!ptrn4.test(pswrd)){
+    alert(" Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+    document.myForm.pwd.focus() ;
+    return false;
+  } 
+  if (pswrd1 == "") {
+    alert("Confirm your password!!");
+    document.myForm.pwd1.focus() ;
+    return false;
+  } 
+  if(!ptrn4.test(pswrd1)){
+    alert("Confirm Password field must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+    document.myForm.pwd1.focus() ;
+    return false;
+  }
+  if (pswrd != pswrd1) {
+    alert("Passwords do not match!!");
+    document.myForm.pwd1.focus() ;
     return false;
   }
 }
@@ -459,7 +504,7 @@ function populateStates(countryElementId, stateElementId) {
 
     var stateElement = document.getElementById(stateElementId);
 
-    stateElement.length = 0; // Fixed by Julian Woods
+    stateElement.length = 0; 
     stateElement.options[0] = new Option('Select State', '');
     stateElement.selectedIndex = 0;
 
