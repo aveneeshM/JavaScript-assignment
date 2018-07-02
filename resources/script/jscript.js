@@ -40,7 +40,7 @@ function genCaptcha(){
 }
 function captchaSubmit(){
   if(total != document.getElementById("soln").value){
-    document.getElementById("suptext").innerHTML = "wrong answer!!";
+    document.getElementById("suptext").innerHTML = "wrong answer!! Refresh to resubmit.";
     var btn = document.getElementById("btn1");
     btn.disabled = true;
     var result = document.getElementById("soln");
