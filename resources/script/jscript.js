@@ -43,6 +43,8 @@ function captchaSubmit(){
     document.getElementById("suptext").innerHTML = "wrong answer!!";
     var btn = document.getElementById("btn1");
     btn.disabled = true;
+    var result = document.getElementById("soln");
+    result.disabled = true;
   }
   else{
     document.getElementById("truecaptcha").innerHTML = 
@@ -54,6 +56,8 @@ function captchaSubmit(){
   document.getElementById("suptext").innerHTML = "";
   var btn = document.getElementById("btn1");
   btn.disabled = false;
+  var result = document.getElementById("soln");
+  result.disabled = false;
   genCaptcha();
   document.getElementById("soln").value= "";
 }
