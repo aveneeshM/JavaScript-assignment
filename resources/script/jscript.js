@@ -91,7 +91,7 @@ function validateForm() {
     mm="0"+mm;
   }
   today = yyyy+"-"+mm+"-"+dd;
-  if (x == ""){
+  if (fname == ""){
     alert("first name can not be empty");
     document.myForm.firstname.focus() ;
     return false;
