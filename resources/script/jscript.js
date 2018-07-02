@@ -58,8 +58,8 @@ function captchaSubmit(){
   document.getElementById("soln").value= "";
 }
 function validateForm() {
-  var x = document.myForm.firstname.value;
-  var y = document.myForm.lastname.value;
+  var fname = document.myForm.firstname.value;
+  var lname = document.myForm.lastname.value;
   var cty = document.myForm.city.value;
   var stt = document.myForm.state.value;
   var cntry = document.myForm.country.value;
@@ -96,28 +96,28 @@ function validateForm() {
     document.myForm.firstname.focus() ;
     return false;
   }
-  if( x.length <= 2){
+  if( fname.length <= 2){
     alert("firstName must be of atleast 3 letters.");
     document.myForm.firstname.focus() ;
     return false;
   }
-  if(x.match(ptrn1) != null || x.match(ptrn2) != null ){
+  if(fname.match(ptrn1) != null || fname.match(ptrn2) != null ){
     alert("  FirstName should only contain letters and shouldn't contain trailing or preceding spaces. ");
     document.myForm.firstname.focus() ;
     return false;
   }
-  if (y == ""){
+  if (lname == ""){
     alert("Second name can not be empty");
     document.myForm.lastname.focus() ;
     return false;
   }
-  if( y.length <= 2){
+  if( lname.length <= 2){
     alert("lastName must be of atleast 3 letters.");
     document.myForm.lastname.focus() ;
     return false;
   }
 
-  if(y.match(ptrn1) != null || y.match(ptrn2) != null ){
+  if(lname.match(ptrn1) != null || lname.match(ptrn2) != null ){
     alert("  LastName should only contain letters and shouldn't contain trailing or preceding spaces. ");
     document.myForm.lastname.focus() ;
     return false;
